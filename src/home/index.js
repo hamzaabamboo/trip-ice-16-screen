@@ -1,5 +1,32 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { db } from '../firebase';
+class Home extends Component {
+	state = {
+		message: 'Loading...'
+	};
+	componentDidMount() {
+		db.collection('message')
+			.doc('current')
+			.onSnapshot(doc => {
+				this.setState({ message: doc.data().message });
+			});
+	}
+	render() {
+		return (
+			<Background>
+				<Content>
+					<Title>ICE Trip 2018</Title>
+					<MessageBox>
+						<Message>{this.state.message}</Message>
+					</MessageBox>
+				</Content>
+			</Background>
+		);
+	}
+}
+
+export default Home;
 
 const Background = styled.div`
 	height: 100vh;
@@ -66,23 +93,5 @@ const MessageBox = styled.div`
 	text-align: center;
 	min-height: 150px;
 	min-width: 40%;
+	white-space: pre-line;
 `;
-
-class Home extends Component {
-	render() {
-		return (
-			<Background>
-				<Content>
-					<Title>ICE Trip 2018</Title>
-					<MessageBox>
-						<Message>
-							Coming up next: <br /> Something fun
-						</Message>
-					</MessageBox>
-				</Content>
-			</Background>
-		);
-	}
-}
-
-export default Home;
