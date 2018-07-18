@@ -34,6 +34,7 @@ class Controls extends Component {
 			})
 			.then(doc => {
 				this.setState({
+					message: '',
 					status: {
 						error: false,
 						message: 'Message set !'
@@ -69,7 +70,10 @@ class Controls extends Component {
 					</Content>
 				) : (
 					<Content>
-						<TextField onChange={this.handleChange} />
+						<TextField
+							onChange={this.handleChange}
+							value={this.state.message}
+						/>
 						<br />
 						<Button onClick={this.send}>Send message</Button>
 						<Button onClick={this.logout}>Logout</Button>
