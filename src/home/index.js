@@ -61,7 +61,7 @@ const MessageBox = styled.div`
 	border: 5px black solid;
 	border-radius: 10px;
 	padding: 20px;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.3);
 	display: inline-block;
 	text-align: center;
 	min-height: 150px;
@@ -73,9 +73,11 @@ class Home extends Component {
 		return (
 			<Background>
 				<Content>
-					<Title>ICE Trip #16</Title>
+					<Title>ICE Trip 2018</Title>
 					<MessageBox>
-						<Message>React Rocks !</Message>
+						<Message>
+							Coming up next: <br /> Something fun
+						</Message>
 					</MessageBox>
 				</Content>
 			</Background>
