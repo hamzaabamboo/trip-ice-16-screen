@@ -110,10 +110,11 @@ const MessageBox = styled(
 	posed.div({
 		left: {
 			...config,
-			x: '-200%'
+			x: '-200%',
+			rotate: -180
 		},
-		center: { ...config, x: '0%' },
-		right: { ...config, x: '200%' }
+		center: { ...config, x: '0%', rotate: 0 },
+		right: { ...config, x: '200%', rotate: 180 }
 	})
 )`
 	text-align: center;
