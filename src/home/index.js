@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { db } from '../firebase';
+import posed, { PoseGroup } from 'react-pose';
 class Home extends Component {
 	state = {
-		message: 'Loading...'
+		message: 'Loading...',
+		position: 'left'
 	};
 	componentDidMount() {
 		db.collection('message')
 			.doc('current')
 			.onSnapshot(doc => {
-				this.setState({ message: doc.data().message });
+				this.setState({
+					position: 'right'
+				});
+				this.setState({
+					message: doc.data().message,
+					position: 'center'
+				});
 			});
 	}
 	render() {
@@ -17,9 +25,15 @@ class Home extends Component {
 			<Background>
 				<Content>
 					<Title>ICE Trip 2018</Title>
-					<MessageBox>
-						<Message>{this.state.message}</Message>
-					</MessageBox>
+					<PoseGroup
+						enterPose="center"
+						exitPose="right"
+						preEnterPose="left"
+					>
+						<MessageBox key={this.state.message}>
+							<Message>{this.state.message}</Message>
+						</MessageBox>
+					</PoseGroup>
 				</Content>
 			</Background>
 		);
@@ -33,7 +47,9 @@ const Background = styled.div`
 	width: 100vw;
 	background: linear-gradient(216deg, #0000ff, #add8e6, #00ffff);
 	background-size: 600% 600%;
-
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 	-webkit-animation: AnimationName 26s ease infinite;
 	-moz-animation: AnimationName 26s ease infinite;
 	animation: AnimationName 26s ease infinite;
@@ -74,23 +90,37 @@ const Background = styled.div`
 `;
 const Title = styled.h1`
 	font-size: 4em;
-	margin-top: 0;
-	margin-bottom: 50px;
+	text-align: center;
+	margin: 20px 0;
 `;
 const Content = styled.div`
-	text-align: center;
-	padding-top: 20vh;
+	display: flex;
+	max-width: 80%;
+	flex-direction: column;
+	justify-content: center;
 `;
 const Message = styled.p`
-	font-size: 2em;
+	font-size: 1.75em;
+	margin: 0;
 `;
-const MessageBox = styled.div`
+const config = {
+	transition: { type: 'spring' }
+};
+const MessageBox = styled(
+	posed.div({
+		left: {
+			...config,
+			x: '-200%'
+		},
+		center: { ...config, x: '0%' },
+		right: { ...config, x: '200%' }
+	})
+)`
+	text-align: center;
 	border: 5px black solid;
 	border-radius: 10px;
 	padding: 20px;
 	background-color: rgba(0, 0, 0, 0.3);
-	display: inline-block;
-	text-align: center;
 	min-height: 150px;
 	min-width: 40%;
 	white-space: pre-line;
