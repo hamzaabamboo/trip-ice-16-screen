@@ -119,7 +119,11 @@ const MessageBox = styled(
 )`
 	text-align: center;
 	border: 5px black solid;
+	overflow-wrap: break-word;
 	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 	padding: 20px;
 	background-color: rgba(0, 0, 0, 0.3);
 	min-height: 150px;

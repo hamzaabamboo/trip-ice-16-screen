@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { auth, provider } from '../firebase.js';
 import { db } from '../firebase';
+import Textarea from 'react-textarea-autosize';
 import styled from 'styled-components';
 
 class Controls extends Component {
@@ -74,17 +75,19 @@ class Controls extends Component {
 							onChange={this.handleChange}
 							value={this.state.message}
 						/>
-						<br />
-						<Button onClick={this.send}>Send message</Button>
-						<Button onClick={this.logout}>Logout</Button>
+						<ButtonsBox>
+							<Button onClick={this.send}>Send message</Button>
+							<Button onClick={this.logout}>Logout</Button>
+						</ButtonsBox>
+
+						{this.state.status &&
+							(!this.state.status.error ? (
+								<Success>{this.state.status.message}</Success>
+							) : (
+								<Failed>{this.state.status.message}</Failed>
+							))}
 					</Content>
 				)}
-				{this.state.status &&
-					(!this.state.status.error ? (
-						<Success>{this.state.status.message}</Success>
-					) : (
-						<Failed>{this.state.status.message}</Failed>
-					))}
 			</Background>
 		);
 	}
@@ -97,6 +100,7 @@ const Success = styled.div`
 	border-radius: 10px;
 	border: 1px green solid;
 	padding: 20px;
+	text-align: center;
 `;
 const Failed = styled.div`
 	color: red;
@@ -106,16 +110,27 @@ const Failed = styled.div`
 	border-radius: 10px;
 	border: 1px red solid;
 	padding: 20px;
+	text-align: center;
 `;
 const Background = styled.div`
 	height: 100vh;
 	width: 100vw;
 	background: linear-gradient(to right, #0000ff, #00ffff);
-	text-align: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 `;
 const Content = styled.div`
-	padding-top: 20vh;
-	text-align: center;
+	flex-direction: column;
+	display: flex;
+	justify-content: center;
+	max-width: 80%;
+	width: 80%;
+`;
+
+const ButtonsBox = styled.div`
+	display: flex;
+	justify-content: center;
 `;
 const Button = styled.button`
 	padding: 10px;
@@ -130,9 +145,7 @@ const Button = styled.button`
 	}
 	cursor: pointer;
 `;
-const TextField = styled.textarea`
-	display: inline-block;
-	width: 80%;
+const TextField = styled(Textarea)`
 	padding: 10px;
 	border: 5px black solid;
 	text-align: center;
@@ -141,6 +154,7 @@ const TextField = styled.textarea`
 	background-color: rgba(0, 0, 0, 0.1);
 	min-height: 200px;
 	margin-bottom: 15px;
+	overflow: hidden;
 	:focus {
 		outline: 0;
 	}
