@@ -93,13 +93,7 @@ const Background = styled.div`
 const Title = styled.h1`
 	text-align: center;
 	font-size: 4em;
-	background: linear-gradient(
-		to right,
-		#01579b 20%,
-		#29b6f6 40%,
-		#29b6f6 60%,
-		#01579b 80%
-	);
+	background: linear-gradient(to right, #29b6f6, #01579b);
 	background-size: 200% auto;
 
 	color: #000;
@@ -108,10 +102,16 @@ const Title = styled.h1`
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 
-	animation: shine 10s linear infinite;
+	animation: shine 20s ease infinite;
 	@keyframes shine {
-		to {
-			background-position: 200% center;
+		0% {
+			background-position: 100% 50%;
+		}
+		50% {
+			background-position: 0% 50%;
+		}
+		100% {
+			background-position: 100% 50%;
 		}
 	}
 `;
